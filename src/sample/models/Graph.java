@@ -42,7 +42,7 @@ public class Graph {
         {
             HashSet<Point> visibleVerticies = getVisibleVerticies(v, lines);
             for (Point w : visibleVerticies)
-                if (!v.equals(w))
+                if (!v.equals(w) && !PolygonContainer.isOkay(v, w))
                     graph.addEdge(v, w);
         }
 

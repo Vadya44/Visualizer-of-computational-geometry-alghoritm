@@ -33,8 +33,11 @@ public class Main extends Application {
 
     Point oldPoint = new Point(0, 0);
     private boolean isEndOfLine = false;
+
+
     private Polygon temp;
     private boolean isNewPolygon = true;
+    private Point lastPoint = new Point();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -121,6 +124,11 @@ public class Main extends Application {
                             System.out.println("start : " + p.getX() + " : " + p.getY());
                             button1.setDisable(false);
                             button2.setDisable(false);
+                            if (!isNewPolygon)
+                            {
+                                PolygonContainer.addPolygon(temp);
+                                isNewPolygon = true;
+                            }
                             return;
                         }
 
@@ -132,6 +140,11 @@ public class Main extends Application {
                             toPoint = p;
                             button1.setDisable(false);
                             button2.setDisable(false);
+                            if (!isNewPolygon)
+                            {
+                                PolygonContainer.addPolygon(temp);
+                                isNewPolygon = true;
+                            }
                             return;
                         }
 
@@ -155,7 +168,25 @@ public class Main extends Application {
                                 PointsSet.addPoint(event.getX(), event.getY());
                             }
 
+                            if (isNewPolygon)
+                            {
+                                temp = new Polygon();
+                                isNewPolygon = false;
+                            }
+                            else
+                            {
+                                if (!lastPoint.equals(oldPoint)) {
+                                    PolygonContainer.addPolygon(temp);
+                                    temp = new Polygon();
+                                }
+                            }
+                            temp.addLine(new Line(oldPoint, nearest));
+
+
+
                             linesSet.addLine(new Line(oldPoint, nearest));
+
+                            lastPoint = nearest;
 
                             LinesContainer.addLine(new Line(oldPoint, nearest));
 
