@@ -55,11 +55,11 @@ public class Graph {
     {
         double a = Math.abs(p1.getX() - p2.getX());
         double b = Math.abs(p1.getY() - p2.getY());
-        int angle = (int)(Math.toDegrees(Math.atan(a/b)) + 0.5);
+        int angle = (int)(Math.toDegrees(Math.atan(a/b)) * 10);
         if (p1.getY() < p2.getY())
             return angle;
         else
-            return 180 - angle;
+            return 1800 - angle;
 
     }
 
@@ -76,8 +76,13 @@ public class Graph {
         }
         for (Point w : sortedPoints)
         {
-            if (!BST.areIntersects(new Line(v, w), status.getLeft()))
-                res.add(w);
+            boolean isOk = true;
+            for (Line l : lines)
+                if (BST.areIntersects(new Line(v, w), l))
+                    isOk = false;
+            if (isOk) res.add(w);
+            //if (!BST.areIntersects(new Line(v, w), status.getLeft()))
+              //  res.add(w);
             for (Line s : lines)
                 if (s.isLeftTo(new Line (v, w)))
                     status.remove(v, s);

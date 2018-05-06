@@ -32,10 +32,15 @@ public class BST {
         double b = (l.getP2().getX() * l.getP1().getY() - l.getP1().getX() *
                 l.getP2().getY())/(l.getP2().getX() - l.getP1().getX()); // y = ax+b
         perp = Math.abs((-a) * v.getX() + v.getY() - b) / Math.sqrt(1 + (a * a));
+
         vp1 = Math.sqrt((v.getX() - l.getP1().getX())*(v.getX() - l.getP1().getX()) +
                 (v.getY() - l.getP1().getY())*(v.getY() - l.getP1().getY()));
         vp2  = Math.sqrt((v.getX() - l.getP2().getX())*(v.getX() - l.getP2().getX()) +
                 (v.getY() - l.getP2().getY())*(v.getY() - l.getP2().getY()));
+        int c = (int)Math.max(vp1, vp2);
+        int bb = (int)Math.min(vp1, vp2);
+        if (c * c >=  bb * bb + perp * perp + 5)
+            perp = Integer.MAX_VALUE;
         return (int)Math.min(perp, Math.min(vp1, vp2));
 
     }
