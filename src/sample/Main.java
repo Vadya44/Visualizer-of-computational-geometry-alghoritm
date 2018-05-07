@@ -143,7 +143,6 @@ public class Main extends Application {
                             PointsSet.addPoint(p);
                             pointFromChoosing = false;
                             fromPoint = p;
-                            System.out.println("start : " + p.getX() + " : " + p.getY());
                             button1.setDisable(false);
                             button2.setDisable(false);
                             if (!isNewPolygon)
@@ -159,7 +158,6 @@ public class Main extends Application {
                         if (pointToChoosing) {
                             Point p = new Point(event.getX(), event.getY());
                             PointsSet.addPoint(p);
-                            System.out.println("end : " + p.getX() + " : " + p.getY());
                             pointToChoosing = false;
                             toPoint = p;
                             button1.setDisable(false);

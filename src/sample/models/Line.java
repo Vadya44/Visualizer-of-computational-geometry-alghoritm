@@ -41,7 +41,7 @@ public class Line {
             return true;
         else return false;
     }
-    public boolean isLeftTo(Line vw) // TODO: ПЕРЕДЕЛАТЬ : self лежит слева от vw
+    public boolean isLeftTo(Line vw)
     {
         if (!(vw.p1.equals(this.getP1()) || vw.p1.equals(this.getP2())  ||
                 vw.p2.equals(this.getP1()) || vw.p2.equals(this.getP2())))

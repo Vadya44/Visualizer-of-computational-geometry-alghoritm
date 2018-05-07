@@ -83,6 +83,9 @@ public class Graph {
             if (isOk) res.add(w);
             //if (!BST.areIntersects(new Line(v, w), status.getLeft()))
               //  res.add(w);
+
+            // TODO : при равном расстоянии из статуса берется иной left
+
             for (Line s : lines)
                 if (s.isLeftTo(new Line (v, w)))
                     status.remove(v, s);
