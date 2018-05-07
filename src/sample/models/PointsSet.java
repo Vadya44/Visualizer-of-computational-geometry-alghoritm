@@ -38,6 +38,12 @@ public class PointsSet {
         return instance.mPoints;
     }
 
+    public static void clear()
+    {
+        instance.mPoints = null;
+        instance.mPoints = new HashSet<>();
+    }
+
     public static void setPoints(HashSet<Point> points) {
         instance.mPoints = points;
     }

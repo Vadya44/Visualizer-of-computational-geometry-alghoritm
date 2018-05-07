@@ -11,6 +11,11 @@ public class LinesContainer {
         mLines = new HashSet<>();
     }
 
+    public static void clear() {
+        instance.mLines = null;
+        instance.mLines = new HashSet<>();
+    }
+
     public static void addLine(Line l)
     {
         instance.mLines.add(l);

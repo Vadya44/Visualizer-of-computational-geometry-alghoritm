@@ -20,6 +20,11 @@ public class PolygonContainer {
         mPolygons = new ArrayList<>();
     }
 
+    public static void clear()
+    {
+        instance.mPolygons = null;
+        instance.mPolygons = new ArrayList<>();
+    }
 
     public static void addPolygon(Polygon p)
     {

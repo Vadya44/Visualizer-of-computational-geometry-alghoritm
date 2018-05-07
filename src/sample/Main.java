@@ -44,6 +44,7 @@ public class Main extends Application {
         Button button1 = new Button("chooseStart");
         Button button2 = new Button("chooseEnd");
         Button button3 = new Button("Compute");
+        Button button4 = new Button("Clear");
 
 
         button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -82,14 +83,28 @@ public class Main extends Application {
         button3.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (!isNewPolygon)
+                {
+                    PolygonContainer.addPolygon(temp);
+                    isNewPolygon = true;
+                }
                 Graph graph = new Graph(PointsSet.getPoints());
                 graph = Graph.buildVisibilityGraph(LinesContainer.getLines());
+                gc.setStroke(Color.RED);
+                gc.setLineWidth(1);
                 for (Line l : graph.getEdges())
                     linesSet.addLine(l);
                 Dijkstra dijkstra = new Dijkstra(graph);
                 dijkstra.execute(fromPoint);
                 LinkedList<Point> ll = dijkstra.getPath(toPoint);
-                System.out.println(ll.size());
+
+                gc.setStroke(Color.GREEN);
+                gc.setLineWidth(6);
+
+                for (int i = 0; i < ll.size() - 1 ; i++)
+                    linesSet.addLine(new Line(ll.get(i), ll.get(i + 1)));
+                gc.setLineWidth(3);
+                gc.setStroke(Color.BLUE);
             }
         });
         button3.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -99,18 +114,25 @@ public class Main extends Application {
             }
         });
 
+        button4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                clearAll();
+            }
+        });
+
         root.getChildren().add(button1);
         root.getChildren().add(button2);
         root.getChildren().add(button3);
+        root.getChildren().add(button4);
 
         primaryStage.setTitle("Canvas Test");
-        gc.setFill(Color.GREEN);
         gc.setStroke(Color.BLUE);
         gc.setLineWidth(3);
         linesSet = new LinesSet(gc);
         root.getChildren().add(canvas);
         primaryStage.setScene(new Scene(root, 2000, 2000));
-        //primaryStage.setFullScreen(true);
+        primaryStage.setFullScreen(true);
         primaryStage.show();
         canvas.addEventHandler(MouseEvent.MOUSE_PRESSED,
                 new EventHandler<MouseEvent>(){
@@ -129,6 +151,8 @@ public class Main extends Application {
                                 PolygonContainer.addPolygon(temp);
                                 isNewPolygon = true;
                             }
+                            gc.setFill(Color.GREEN);
+                            gc.fillOval(p.getX() - 5, p.getY() - 5, 10, 10);
                             return;
                         }
 
@@ -145,6 +169,8 @@ public class Main extends Application {
                                 PolygonContainer.addPolygon(temp);
                                 isNewPolygon = true;
                             }
+                            gc.setFill(Color.RED);
+                            gc.fillOval(p.getX() - 5, p.getY() - 5, 10, 10);
                             return;
                         }
 
@@ -181,13 +207,9 @@ public class Main extends Application {
                                 }
                             }
                             temp.addLine(new Line(oldPoint, nearest));
-
-
-
-                            linesSet.addLine(new Line(oldPoint, nearest));
-
                             lastPoint = nearest;
 
+                            linesSet.addLine(new Line(oldPoint, nearest));
                             LinesContainer.addLine(new Line(oldPoint, nearest));
 
                             isEndOfLine = false;
@@ -196,6 +218,28 @@ public class Main extends Application {
                 });
 
     }
+    public void clearAll()
+    {
+        LinesContainer.clear();
+        PointsSet.clear();
+        PolygonContainer.clear();
+        linesSet.clear();
+        gc.clearRect(0, 0, 1800, 1800);
+        boolean pointFromChoosing = false;
+        boolean pointToChoosing = false;
+        Point fromPoint = null;
+        Point toPoint = null;
+
+        Point oldPoint = new Point(0, 0);
+        boolean isEndOfLine = false;
+
+
+        Polygon temp;
+        boolean isNewPolygon = true;
+        Point lastPoint = new Point();
+        FlowPane root = new FlowPane();
+    }
+
 
 
     public static void main(String[] args) { launch(args);

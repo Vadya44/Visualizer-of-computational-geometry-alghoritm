@@ -12,6 +12,11 @@ public class LinesSet implements Iterable {
         return lines;
     }
 
+    public void clear()
+    {
+        this.lines = new HashSet<>();
+    }
+
     public LinesSet(GraphicsContext gc)
     {
         lines = new HashSet<>();
