@@ -51,7 +51,7 @@ public class BST {
     public void add(Point v, Line l)
     {
         int dist = getDist(v, l);
-        if (dist >= 0)
+        if (dist > 0)
             insert(l, dist);
     }
 
@@ -128,39 +128,7 @@ public class BST {
 
 
 
-    public static boolean areIntersects(Line l1, Line l2)
-    {
-        if (l1 == null || l2 == null) return false;
-        if (l1.getP2().equals(l2.getP1()) || l1.getP2().equals(l2.getP2())
-                || l1.getP1().equals(l2.getP1()) || l1.getP1().equals(l2.getP2()))
-            return false;
 
-        int a_x = (int)l1.getP1().getX();
-        int a_y = (int)l1.getP1().getY();
-        int b_x = (int)l1.getP2().getX();
-        int b_y = (int)l1.getP2().getY();
-        int c_x = (int)l2.getP1().getX();
-        int c_y = (int)l2.getP1().getY();
-        int d_x = (int)l2.getP2().getX();
-        int d_y = (int)l2.getP2().getY();
-        Point a = l1.getP1();
-        Point b = l1.getP2();
-        Point c = l2.getP1();
-        Point d = l2.getP2();
-        boolean areas1 = false;
-        boolean areas2 = false;
-        if (area(a,b,c) *  area(a,b,d) <= 0)
-            areas1 = true;
-        if (area(c,d,a) * area(c,d,b) <= 0)
-            areas2 = true;
-
-        boolean res = intersect_1(a_x, b_x, c_x, d_x)
-                && intersect_1(a_y, b_y, c_y, d_y)
-                && areas1
-                && areas2;
-        return res;
-
-    }
     static long area(Point a, Point b, Point c)
     {
         return (long)((b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX()));
