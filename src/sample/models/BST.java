@@ -1,10 +1,13 @@
 package sample.models;
 
+import java.util.ArrayList;
 import java.util.Set;
 
 
 public class BST {
     Node root;
+
+    private ArrayList<Line> mLines;
 
     public BST(){
         root = null;
@@ -48,8 +51,8 @@ public class BST {
     public void add(Point v, Line l)
     {
         int dist = getDist(v, l);
-        if (dist > 0)
-            insert(l, getDist(v, l));
+        if (dist >= 0)
+            insert(l, dist);
     }
 
     public void remove(Point v, Line l)
@@ -114,7 +117,7 @@ public class BST {
         }
 
         /* Otherwise, recur down the tree */
-        if (dist < root.d)
+        if (dist <= root.d)
             root.left = insertRec(root.left, p, dist);
         else
             root.right = insertRec(root.right, p, dist);
@@ -188,5 +191,19 @@ public class BST {
             temp = temp.left;
         }
         return temp.key;
+    }
+    void inorderRec(Node root) {
+        if (root != null) {
+            mLines.add(root.key);
+            inorderRec(root.left);
+            inorderRec(root.right);
+        }
+    }
+
+    public ArrayList<Line> getLines()
+    {
+        mLines = new ArrayList<>();
+        inorderRec(root);
+        return mLines;
     }
 }

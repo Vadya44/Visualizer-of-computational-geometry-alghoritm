@@ -77,12 +77,12 @@ public class Graph {
         for (Point w : sortedPoints)
         {
             boolean isOk = true;
-            for (Line l : lines)
+            for (Line l : status.getLines())
                 if (BST.areIntersects(new Line(v, w), l))
                     isOk = false;
             if (isOk) res.add(w);
-            //if (!BST.areIntersects(new Line(v, w), status.getLeft()))
-              //  res.add(w);
+//            if (!BST.areIntersects(new Line(v, w), status.getLeft()))
+//               res.add(w);
 
             // TODO : при равном расстоянии из статуса берется иной left
 
