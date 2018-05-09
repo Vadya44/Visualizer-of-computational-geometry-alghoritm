@@ -26,6 +26,13 @@ public class PolygonContainer {
         instance.mPolygons = new ArrayList<>();
     }
 
+    public static boolean contains(Point p)
+    {
+        for (Polygon polygon : instance.mPolygons)
+            if (polygon.contains(p)) return true;
+        return false;
+    }
+
     public static void addPolygon(Polygon p)
     {
         instance.mPolygons.add(p);

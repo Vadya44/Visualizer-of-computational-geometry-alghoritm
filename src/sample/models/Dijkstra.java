@@ -12,9 +12,18 @@ public class Dijkstra {
     private Map<Point, Integer> distance;
 
     public Dijkstra(Graph graph) {
-        // create a copy of the array so that we can operate on this array
+
         this.nodes = new ArrayList<Point>(PointsSet.getPoints());
         this.Lines = new ArrayList<Line>(graph.getEdges());
+        this.Lines.addAll(getSecondPath(graph.getEdges()));
+    }
+
+    public static ArrayList<Line> getSecondPath(ArrayList<Line> lines)
+    {
+        ArrayList<Line> res = new ArrayList<>();
+        for (Line l : lines)
+            res.add(new Line(l.getP2(), l.getP1()));
+        return res;
     }
 
     public void execute(Point source) {
@@ -42,6 +51,7 @@ public class Dijkstra {
                         + getDistance(node, target));
                 predecessors.put(target, node);
                 unSettledNodes.add(target);
+
             }
         }
 
@@ -50,11 +60,11 @@ public class Dijkstra {
     private int getDistance(Point node, Point target) {
         for (Line line : Lines) {
             if (line.getP1().equals(node) &&
-                    line.getP2().equals(target)) {
+                    line.getP2().equals(target) ) {
                 return (int)line.getWeight();
             }
         }
-        throw new RuntimeException("Should not happen");
+        return 0;
     }
 
     private List<Point> getNeighbors(Point node) {
@@ -95,14 +105,9 @@ public class Dijkstra {
         }
     }
 
-    /*
-     * This method returns the path from the source to the selected target and
-     * NULL if no path exists
-     */
     public LinkedList<Point> getPath(Point target) {
         LinkedList<Point> path = new LinkedList<Point>();
         Point step = target;
-        // check if a path exists
         if (predecessors.get(step) == null) {
             return null;
         }
@@ -111,7 +116,6 @@ public class Dijkstra {
             step = predecessors.get(step);
             path.add(step);
         }
-        // Put it into the correct order
         Collections.reverse(path);
         return path;
     }

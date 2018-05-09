@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 
 public class Polygon implements Iterable {
     private List<Line> perimeter;
+    private List<Point> points;
 
     public Polygon(List<Line> perimeter){
         this.perimeter = perimeter;
@@ -17,6 +18,7 @@ public class Polygon implements Iterable {
 
     public void addLine(Line line) {
         perimeter.add(line);
+        points.add(line.getP1());
     }
 
     public boolean isBad(Point p1, Point p2)
@@ -43,7 +45,23 @@ public class Polygon implements Iterable {
 
     public Polygon() {
         perimeter = new ArrayList<>();
+        points = new ArrayList<>();
     };
+
+    public boolean contains(Point test) {
+        int i;
+        int j;
+        boolean result = false;
+        for (i = 0, j = points.size() - 1; i < points.size(); j = i++) {
+            if ((points.get(i).getY() > test.getY()) != (points.get(j).getY() > test.getY()) &&
+                    (test.getX() < (points.get(j).getX() - points.get(i).getX()) *
+                            (test.getY() - points.get(i).getY()) /
+                            (points.get(j).getY()-points.get(i).getY()) + points.get(i).getX())) {
+                result = !result;
+            }
+        }
+        return result;
+    }
 
     @Override
     public Iterator<Line> iterator() {
@@ -60,5 +78,26 @@ public class Polygon implements Iterable {
             action.accept(l);
     }
 
+    public double[] getX()
+    {
+        double[] res = new double[points.size()];
+        int i = 0;
+        for (Point p : points)
+            res[i++] = p.getX();
+        return res;
+    }
+    public double[] getY()
+    {
+        double[] res = new double[points.size()];
+        int i = 0;
+        for (Point p : points)
+            res[i++] = p.getY();
+        return res;
+    }
+
+    public int pointsSize()
+    {
+        return points.size();
+    }
 
 }

@@ -2,18 +2,17 @@ package sample;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.models.*;
 
@@ -33,6 +32,8 @@ public class Main extends Application {
 
     Point oldPoint = new Point(0, 0);
     private boolean isEndOfLine = false;
+    private boolean isSecondClickButton1 = false;
+    private boolean isSecondClickButton2 = false;
 
 
     private Polygon temp;
@@ -41,51 +42,75 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Button button1 = new Button("chooseStart");
-        Button button2 = new Button("chooseEnd");
-        Button button3 = new Button("Compute");
-        Button button4 = new Button("Clear");
+        Button buttonStart = new Button("Выбрать начальную точку");
+        Button buttonEnd = new Button("Выбрать конечную точку");
+        Button buttonCompute = new Button("Вычислить путь");
+        Button buttonClear = new Button("Очистить");
+        Button buttonHelp = new Button("Как пользоваться");
 
 
-        button1.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (isSecondClickButton1)
+                {
+                    clearAll();
+                }
                 pointFromChoosing = true;
                 PointsSet.deletePoint(fromPoint);
-                button1.setDisable(true);
-                button2.setDisable(true);
+                buttonStart.setDisable(true);
+                buttonEnd.setDisable(true);
+                isSecondClickButton1 = true;
             }
         });
-        button1.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        buttonStart.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                button1.setEffect(new DropShadow());
+                buttonStart.setEffect(new DropShadow());
+            }
+        });
+        buttonStart.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonStart.setEffect(null);
             }
         });
 
 
-        button2.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonEnd.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
+                if (isSecondClickButton2)
+                {
+                    clearAll();
+                }
                 pointToChoosing = true;
                 PointsSet.deletePoint(toPoint);
-                button2.setDisable(true);
-                button1.setDisable(true);
+                buttonEnd.setDisable(true);
+                buttonStart.setDisable(true);
+                isSecondClickButton2 = true;
             }
         });
-        button2.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        buttonEnd.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                button2.setEffect(new DropShadow());
+                buttonEnd.setEffect(new DropShadow());
+            }
+        });
+        buttonEnd.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonEnd.setEffect(null);
             }
         });
 
-        button3.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        buttonCompute.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 if (!isNewPolygon)
                 {
                     PolygonContainer.addPolygon(temp);
+                    drawPoly(temp);
                     isNewPolygon = true;
                 }
                 Graph graph = new Graph(PointsSet.getPoints());
@@ -105,28 +130,96 @@ public class Main extends Application {
                     linesSet.addLine(new Line(ll.get(i), ll.get(i + 1)));
                 gc.setLineWidth(3);
                 gc.setStroke(Color.BLUE);
+
             }
         });
-        button3.setOnMouseEntered(new EventHandler<MouseEvent>() {
+        buttonCompute.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                button3.setEffect(new DropShadow());
+                buttonCompute.setEffect(new DropShadow());
+            }
+        });
+        buttonCompute.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonCompute.setEffect(null);
             }
         });
 
-        button4.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+        buttonClear.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonCompute.setEffect(new DropShadow());
+            }
+        });
+        buttonClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 clearAll();
+                lastPoint = new Point(0, 0);
+                oldPoint = new Point(0, 0);
+                isEndOfLine = false;
+                buttonEnd.setDisable(false);
+                buttonStart.setDisable(false);
+            }
+        });
+        buttonClear.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonClear.setEffect(null);
             }
         });
 
-        root.getChildren().add(button1);
-        root.getChildren().add(button2);
-        root.getChildren().add(button3);
-        root.getChildren().add(button4);
 
-        primaryStage.setTitle("Canvas Test");
+        buttonHelp.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonHelp.setEffect(new DropShadow());
+            }
+        });
+        buttonHelp.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonHelp.setEffect(null);
+            }
+        });
+        buttonHelp.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                Label secondLabel = new Label("I'm a Label on new Window");
+
+                StackPane secondaryLayout = new StackPane();
+                secondaryLayout.getChildren().add(secondLabel);
+
+                Scene secondScene = new Scene(secondaryLayout, 230, 100);
+
+                // New window (Stage)
+                Stage newWindow = new Stage();
+                newWindow.setTitle("Second Stage");
+                newWindow.setScene(secondScene);
+
+                // Specifies the modality for new window.
+                newWindow.initModality(Modality.WINDOW_MODAL);
+
+                // Specifies the owner Window (parent) for new window
+                newWindow.initOwner(primaryStage);
+
+                // Set position of second window, related to primary window.
+                newWindow.setX(primaryStage.getX() + 200);
+                newWindow.setY(primaryStage.getY() + 100);
+
+                newWindow.show();
+            }
+        });
+
+        root.getChildren().add(buttonStart);
+        root.getChildren().add(buttonEnd);
+        root.getChildren().add(buttonCompute);
+        root.getChildren().add(buttonClear);
+        root.getChildren().add(buttonHelp);
+
+        primaryStage.setTitle("I see edges!");
         gc.setStroke(Color.BLUE);
         gc.setLineWidth(3);
         linesSet = new LinesSet(gc);
@@ -138,16 +231,19 @@ public class Main extends Application {
                 new EventHandler<MouseEvent>(){
                     @Override
                     public void handle(MouseEvent event) {
+                        if (PolygonContainer.contains(new Point(event.getX(), event.getY())))
+                            return;
                         if (pointFromChoosing) {
                             Point p = new Point(event.getX(), event.getY());
                             PointsSet.addPoint(p);
                             pointFromChoosing = false;
                             fromPoint = p;
-                            button1.setDisable(false);
-                            button2.setDisable(false);
+                            buttonStart.setDisable(false);
+                            buttonEnd.setDisable(false);
                             if (!isNewPolygon)
                             {
                                 PolygonContainer.addPolygon(temp);
+                                drawPoly(temp);
                                 isNewPolygon = true;
                             }
                             gc.setFill(Color.GREEN);
@@ -160,11 +256,12 @@ public class Main extends Application {
                             PointsSet.addPoint(p);
                             pointToChoosing = false;
                             toPoint = p;
-                            button1.setDisable(false);
-                            button2.setDisable(false);
+                            buttonStart.setDisable(false);
+                            buttonEnd.setDisable(false);
                             if (!isNewPolygon)
                             {
                                 PolygonContainer.addPolygon(temp);
+                                drawPoly(temp);
                                 isNewPolygon = true;
                             }
                             gc.setFill(Color.RED);
@@ -201,6 +298,7 @@ public class Main extends Application {
                             {
                                 if (!lastPoint.equals(oldPoint)) {
                                     PolygonContainer.addPolygon(temp);
+                                    drawPoly(temp);
                                     temp = new Polygon();
                                 }
                             }
@@ -228,14 +326,23 @@ public class Main extends Application {
         Point fromPoint = null;
         Point toPoint = null;
 
-        Point oldPoint = new Point(0, 0);
+        Point oldPoint = null;
         boolean isEndOfLine = false;
+        gc.setLineWidth(3);
+        gc.setStroke(Color.BLUE);
 
-
-        Polygon temp;
+        Polygon temp = null;
         boolean isNewPolygon = true;
         Point lastPoint = new Point();
         FlowPane root = new FlowPane();
+        isSecondClickButton1 = false;
+        isSecondClickButton2 = false;
+
+    }
+    public void drawPoly(Polygon p)
+    {
+        gc.setFill(Color.BLUE);
+        gc.fillPolygon(p.getX(), p.getY(), p.pointsSize());
     }
 
 

@@ -78,8 +78,8 @@ public class Point {
             int y_curr = (int)p.getY();
             int x_self = (int)getX();
             int y_self = (int)getY();
-            if (Math.abs(x_curr - x_self) <= 50 &&
-                    Math.abs(y_curr - y_self) <= 50)
+            if (Math.abs(x_curr - x_self) <= 15 &&
+                    Math.abs(y_curr - y_self) <= 15)
                 return p;
         }
         return null;
