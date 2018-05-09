@@ -63,30 +63,22 @@ public class BST {
 
     Node deleteRec(Point v, Node root, Line key)
     {
-        /* Base Case: If the tree is empty */
         if (root == null)  return root;
 
-        /* Otherwise, recur down the tree */
         if (getDist(v, key) < getDist(v, root.key))
             root.left = deleteRec(v, root.left, key);
         else if (getDist(v, key) > getDist(v, root.key))
             root.right = deleteRec(v, root.right, key);
 
-            // if key is same as root's key, then This is the node
-            // to be deleted
         else
         {
-            // node with only one child or no child
             if (root.left == null)
                 return root.right;
             else if (root.right == null)
                 return root.left;
 
-            // node with two children: Get the inorder successor (smallest
-            // in the right subtree)
             root.key = minValue(root.right);
 
-            // Delete the inorder successor
             root.right = deleteRec(v, root.right, root.key);
         }
 

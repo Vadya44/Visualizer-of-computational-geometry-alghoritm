@@ -22,44 +22,11 @@ public class Point {
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
 
     public double getY() {
         return y;
     }
 
-    public void setY(double y) {
-        this.y = y;
-    }
-
-    public Set<Line> getLines()
-    {
-        Set<Line> res = new HashSet<>();
-        for (Line l : LinesContainer.getLines())
-        {
-            if ((l.getP1().getX() == x &&
-                    l.getP1().getY() == y) ||
-                    (l.getP2().getX() == x &&
-                            l.getP2().getY() == y))
-                res.add(l);
-        }
-        return res;
-    }
-    public Point getPrev()
-    {
-        Point p, temp = null;
-        Iterator<Point> iterator = Graph.sortedPoints.iterator();
-        while(iterator.hasNext())
-        {
-            p = iterator.next();
-            if (p.getX() == this.getX() && p.getY() == this.getY())
-                break;
-            else temp = p;
-        }
-        return temp;
-    }
     @Override
     public boolean equals(Object obj)
     {

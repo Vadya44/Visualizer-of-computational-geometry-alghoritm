@@ -13,7 +13,6 @@ public class PointsSet {
 
     public static void addPoint(double x, double y)
     {
-        boolean isContains = false;
         for (Point p : instance.mPoints)
             if (p.equals(new Point(x, y)))
                 return;
@@ -44,24 +43,4 @@ public class PointsSet {
         instance.mPoints = new HashSet<>();
     }
 
-    public static void setPoints(HashSet<Point> points) {
-        instance.mPoints = points;
-    }
-
-    public static Point contains(double x, double y)
-    {
-        double xH = x + 100;
-        double xM = x - 100;
-        double yH = y + 100;
-        double yM = y - 100;
-        for (Point p : instance.mPoints)
-        {
-            double tempX = p.getX();
-            double tempY = p.getY();
-            if (tempX >= xM && tempX <= xH &&
-                    tempY >= yM && tempY <= yH)
-                return p;
-        }
-        return null;
-    }
 }

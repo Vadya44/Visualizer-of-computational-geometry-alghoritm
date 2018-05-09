@@ -1,7 +1,5 @@
 package sample.models;
 
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 
 import java.util.ArrayList;
 import java.util.Iterator;

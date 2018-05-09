@@ -6,12 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.models.*;
@@ -187,16 +187,16 @@ public class Main extends Application {
         buttonHelp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Label secondLabel = new Label("I'm a Label on new Window");
+                Text secondLabel = new Text("I'm a Label on new Window");
 
                 StackPane secondaryLayout = new StackPane();
                 secondaryLayout.getChildren().add(secondLabel);
 
-                Scene secondScene = new Scene(secondaryLayout, 230, 100);
+                Scene secondScene = new Scene(secondaryLayout, primaryStage.getWidth() / 2, primaryStage.getHeight() * 0.8);
 
                 // New window (Stage)
                 Stage newWindow = new Stage();
-                newWindow.setTitle("Second Stage");
+                newWindow.setTitle("Справка по использованию");
                 newWindow.setScene(secondScene);
 
                 // Specifies the modality for new window.
@@ -206,8 +206,8 @@ public class Main extends Application {
                 newWindow.initOwner(primaryStage);
 
                 // Set position of second window, related to primary window.
-                newWindow.setX(primaryStage.getX() + 200);
-                newWindow.setY(primaryStage.getY() + 100);
+                newWindow.setY(primaryStage.getHeight() * 0.1);
+                newWindow.setX(primaryStage.getWidth() / 4);
 
                 newWindow.show();
             }
