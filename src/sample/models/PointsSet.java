@@ -3,29 +3,29 @@ package sample.models;
 import java.util.HashSet;
 
 /**
- *
+ * Синглтон - контейнер точек
  */
 public class PointsSet {
     /**
-     *
+     * Инстанс класса
      */
     private static final PointsSet instance = new PointsSet();
     /**
-     *
+     * Хранилище точек
      */
     private HashSet<Point> mPoints;
 
     /**
-     *
+     * Конструктор по умолчанию
      */
     private PointsSet() {
         mPoints = new HashSet<>();
     }
 
     /**
-     *
-     * @param x
-     * @param y
+     * Функция, добавляющая точку по координатам
+     * @param x Координата по Ox
+     * @param y Координата по Oy
      */
     public static void addPoint(double x, double y)
     {
@@ -36,16 +36,16 @@ public class PointsSet {
     }
 
     /**
-     *
-     * @param p
+     * Функция, удаляющая точку из хранилища
+     * @param p удаляемая точка
      */
     public static void deletePoint(Point p) {
         instance.mPoints.remove(p);
     }
 
     /**
-     *
-     * @param p
+     * Функция, добавляющая точку по точке
+     * @param p Добавляемая точка
      */
     public static void addPoint(Point p)
     {
@@ -59,15 +59,14 @@ public class PointsSet {
 
 
     /**
-     *
-     * @return
+     * Функция, возвращающая точки из хранилища
      */
     public static HashSet<Point> getPoints() {
         return instance.mPoints;
     }
 
     /**
-     *
+     * Функция, очищающая хранилище
      */
     public static void clear()
     {
