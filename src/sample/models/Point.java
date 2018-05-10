@@ -2,16 +2,16 @@ package sample.models;
 
 
 /**
- *
+ * Класс вершины(точки)
  */
 public class Point {
     /**
-     *
+     * Значения координат
      */
     private double x, y;
 
     /**
-     *
+     * Конструктор по умолчанию
      */
     public Point(){
         x = 0;
@@ -19,9 +19,9 @@ public class Point {
     }
 
     /**
-     *
-     * @param x
-     * @param y
+     * Конструктор по координатам
+     * @param x Координата по Ox
+     * @param y Координата по Oy
      */
     public Point(double x, double y)
     {
@@ -30,25 +30,22 @@ public class Point {
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая значение по Ox
      */
     public double getX() {
         return x;
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая значение по Oy
      */
     public double getY() {
         return y;
     }
 
     /**
-     *
-     * @param obj
-     * @return
+     * Функция, проверяющая является ли точка текущей
+     * @param obj проверяемая точка
      */
     @Override
     public boolean equals(Object obj)
@@ -61,8 +58,7 @@ public class Point {
     }
 
     /**
-     *
-     * @return
+     * Функция, проверяющая лежит ли какая-либо точка рядом
      */
     public Point getNearest()
     {
