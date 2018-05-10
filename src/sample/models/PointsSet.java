@@ -1,16 +1,32 @@
 package sample.models;
 
 import java.util.HashSet;
-import java.util.Set;
 
+/**
+ *
+ */
 public class PointsSet {
+    /**
+     *
+     */
     private static final PointsSet instance = new PointsSet();
+    /**
+     *
+     */
     private HashSet<Point> mPoints;
 
+    /**
+     *
+     */
     private PointsSet() {
         mPoints = new HashSet<>();
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public static void addPoint(double x, double y)
     {
         for (Point p : instance.mPoints)
@@ -19,10 +35,18 @@ public class PointsSet {
         instance.mPoints.add(new Point(x, y));
     }
 
+    /**
+     *
+     * @param p
+     */
     public static void deletePoint(Point p) {
         instance.mPoints.remove(p);
     }
 
+    /**
+     *
+     * @param p
+     */
     public static void addPoint(Point p)
     {
 //        boolean cont = false;
@@ -33,15 +57,18 @@ public class PointsSet {
             instance.mPoints.add(p);
     }
 
-    public static PointsSet getInstance()
-    {
-        return instance;
-    }
 
+    /**
+     *
+     * @return
+     */
     public static HashSet<Point> getPoints() {
         return instance.mPoints;
     }
 
+    /**
+     *
+     */
     public static void clear()
     {
         instance.mPoints = null;

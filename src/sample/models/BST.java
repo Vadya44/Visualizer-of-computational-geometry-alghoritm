@@ -3,16 +3,25 @@ package sample.models;
 import java.util.ArrayList;
 import java.util.Set;
 
-
+/**
+ * Бинарное дерево поиска для ребер, упорядоченных по кратчайшему расстоянию от точки v
+ */
 public class BST {
+    /**
+     * Корень дерева
+     */
     Node root;
-
+    /**
+     * Массив ребер
+     */
     private ArrayList<Line> mLines;
 
-    public BST(){
-        root = null;
-    }
 
+    /**
+     * Конструктор с последующей вставкой передаваемых отрезков
+     * @param v Точка, относительно которой ищутся расстояния
+     * @param lines Ребра, подлежащие вставке в дерево
+     */
     public BST(Point v, Set<Line> lines)
     {
         for (Line l : lines)
@@ -28,6 +37,11 @@ public class BST {
         }
     }
 
+    /**
+     * Функция, вычисляющая кратчайшее расстояние от точки до отрезка
+     * @param v Точка, от которой ищется расстояние
+     * @param l Отрезок, к которому ищется расстояние
+     */
     public int getDist(Point v, Line l)
     {
         double perp, vp1, vp2;
@@ -48,6 +62,11 @@ public class BST {
 
     }
 
+    /**
+     * Функция вставки передаваемого отрезка в дерево
+     * @param v Точка, от которой ищется расстояние
+     * @param l Отрезок, подлежащий вставке
+     */
     public void add(Point v, Line l)
     {
         int dist = getDist(v, l);
@@ -55,12 +74,22 @@ public class BST {
             insert(l, dist);
     }
 
+    /**
+     * Функция удаления из дерева передаваемого отрезка
+     * @param v Точка, от которой ищется расстояние
+     * @param l Отрезок, подлежащий удалению
+     */
     public void remove(Point v, Line l)
     {
         root = deleteRec(v, root, l);
     }
 
-
+    /**
+     * Вспомогательная рекурсивная функция удаления
+     * @param v Опорная точка для вычислений
+     * @param root Текущий узел дерева
+     * @param key Удаляемый отрезок
+     */
     Node deleteRec(Point v, Node root, Line key)
     {
         if (root == null)  return root;
@@ -84,6 +113,11 @@ public class BST {
 
         return root;
     }
+
+    /**
+     * Нахождение минимального(кратчайшего левого) листа
+     * @param root
+     */
     Line minValue(Node root)
     {
         Line minv = root.key;
@@ -95,36 +129,49 @@ public class BST {
         return minv;
     }
 
+    /**
+     * Вставка по отрезку без опорной точки
+     * @param p Встваляемый отрезок
+     * @param dist Дистанция для сортировки
+     */
     void insert(Line p, double dist) {
         root = insertRec(root, p, dist);
     }
 
-    /* A recursive function to insert a new key in BST */
+    /**
+     * Рекурсивная вспомогательная функция для вставки
+     * @param root Текущий узел дерева
+     * @param p Вставляемый отрезок
+     * @param dist Дистанция для сортировки
+     */
+
     Node insertRec(Node root, Line p, double dist) {
 
-        /* If the tree is empty, return a new node */
         if (root == null) {
             root = new Node(p, dist);
             return root;
         }
 
-        /* Otherwise, recur down the tree */
         if (dist <= root.d)
             root.left = insertRec(root.left, p, dist);
         else
             root.right = insertRec(root.right, p, dist);
 
-        /* return the (unchanged) node pointer */
         return root;
     }
 
 
-
-
+    /**
+     * Функция нахождения площади
+     * @param a Точка А
+     * @param b Точка B
+     * @param c Точка C
+     */
     static long area(Point a, Point b, Point c)
     {
         return (long)((b.getX() - a.getX()) * (c.getY() - a.getY()) - (b.getY() - a.getY()) * (c.getX() - a.getX()));
     }
+
     static boolean intersect_1(int a, int b, int c, int d)
     {
         if (a > b){
@@ -142,7 +189,9 @@ public class BST {
     }
 
 
-
+    /**
+     * Взятие крайнего левого листа
+     */
     public Line getLeft()
     {
         Node temp = root;
@@ -151,19 +200,5 @@ public class BST {
             temp = temp.left;
         }
         return temp.key;
-    }
-    void inorderRec(Node root) {
-        if (root != null) {
-            mLines.add(root.key);
-            inorderRec(root.left);
-            inorderRec(root.right);
-        }
-    }
-
-    public ArrayList<Line> getLines()
-    {
-        mLines = new ArrayList<>();
-        inorderRec(root);
-        return mLines;
     }
 }

@@ -2,16 +2,31 @@ package sample.models;
 
 import java.util.*;
 
+/**
+ *
+ */
 public class Graph {
-
+    /**
+     *
+     */
     public static TreeSet<Point> sortedPoints;
-
+    /**
+     *
+     */
     private static Set<Line> mLines;
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Line> getEdges() {
         return mEdges;
     }
 
+    /**
+     *
+     * @return
+     */
     public ArrayList<Point> getVertexes() {
         return mVertexes;
     }
@@ -20,7 +35,12 @@ public class Graph {
     ArrayList<Line> mEdges;
     ArrayList<Point> mVertexes;
 
-
+    /**
+     *
+     * @param line
+     * @param left
+     * @return
+     */
     private static boolean areIntersectsLines(Line line, Line left) {
         boolean isOk = true;
         for (Line l : mLines)
@@ -29,6 +49,12 @@ public class Graph {
         return isOk;
     }
 
+    /**
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
     public static boolean areIntersects(Line l1, Line l2)
     {
         if (l1 == null || l2 == null) return false;
@@ -63,6 +89,11 @@ public class Graph {
 
     }
 
+    /**
+     *
+     * @param p
+     * @param p2
+     */
     private void addEdge(Point p, Point p2)
     {
         if (mEdges == null)
@@ -70,14 +101,21 @@ public class Graph {
         mEdges.add(new Line(p, p2));
     }
 
-
+    /**
+     *
+     * @param points
+     */
     public Graph(Set<Point> points)
     {
         this.mVertexes = new ArrayList<>(points);
     }
 
 
-
+    /**
+     *
+     * @param lines
+     * @return
+     */
     public static Graph buildVisibilityGraph(HashSet<Line> lines)
     {
         Graph graph = new Graph(PointsSet.getPoints());
@@ -93,7 +131,12 @@ public class Graph {
     }
 
 
-
+    /**
+     *
+     * @param p1
+     * @param p2
+     * @return
+     */
     public static int getAngle(Point p1, Point p2)
     {
         double a = Math.abs(p1.getX() - p2.getX());
@@ -106,6 +149,12 @@ public class Graph {
 
     }
 
+    /**
+     *
+     * @param v
+     * @param lines
+     * @return
+     */
     private static HashSet<Point> getVisibleVerticies(Point v, Set<Line> lines)
     {
         Comparator<Point> comparator = (Point o1, Point o2) -> getAngle(v, o2) - getAngle(v, o1);
@@ -119,7 +168,15 @@ public class Graph {
                 sortedPoints.add(w);
         }
         for (Point w : sortedPoints)
+        //for (Point w : PointsSet.getPoints())
         {
+//            boolean isOk = true;
+//            for (Line l : LinesContainer.getLines())
+//                if (areIntersects(l, new Line(v, w))) {
+//                    isOk = false;
+//                    break;
+//                }
+//            if (isOk) res.add(w);
             if (areIntersectsLines(new Line(v, w), status.getLeft()))
                 res.add(w);
 

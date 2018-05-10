@@ -21,6 +21,9 @@ import sample.models.*;
 import java.io.File;
 import java.util.*;
 
+/**
+ *
+ */
 public class Main extends Application {
     private Canvas canvas = new Canvas(1800, 1800);
     private GraphicsContext gc = canvas.getGraphicsContext2D();
@@ -44,6 +47,11 @@ public class Main extends Application {
     private boolean isNewPolygon = true;
     private Point lastPoint = new Point();
 
+    /**
+     *
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception{
         Button buttonStart = new Button("Выбрать начальную точку");
@@ -317,13 +325,6 @@ public class Main extends Application {
 
                         }
                         else {
-                            Point p = new Point(event.getX(), event.getY());
-                            Point nearest = p.getNearest();
-                            if (nearest == null) {
-                                nearest = p;
-                                PointsSet.addPoint(event.getX(), event.getY());
-                            }
-
                             if (isNewPolygon)
                             {
                                 temp = new Polygon();
@@ -335,8 +336,18 @@ public class Main extends Application {
                                     PolygonContainer.addPolygon(temp);
                                     drawPoly(temp);
                                     temp = new Polygon();
+                                    isEndOfLine = false;
+                                    isNewPolygon = true;
+                                    return;
                                 }
                             }
+                            Point p = new Point(event.getX(), event.getY());
+                            Point nearest = p.getNearest();
+                            if (nearest == null) {
+                                nearest = p;
+                                PointsSet.addPoint(event.getX(), event.getY());
+                            }
+
                             temp.addLine(new Line(oldPoint, nearest));
                             lastPoint = nearest;
 
@@ -349,6 +360,10 @@ public class Main extends Application {
                 });
 
     }
+
+    /**
+     *
+     */
     public void clearAll()
     {
         LinesContainer.clear();
@@ -374,11 +389,22 @@ public class Main extends Application {
         isSecondClickButton2 = false;
 
     }
+
+    /**
+     *
+     * @param p
+     */
     public void drawPoly(Polygon p)
     {
         gc.setFill(Color.BLUE);
         gc.fillPolygon(p.getX(), p.getY(), p.pointsSize());
     }
+
+    /**
+     *
+     * @param file
+     * @param primaryStage
+     */
 
     public void calcFromFile(File file, Stage primaryStage)
     {
@@ -450,7 +476,10 @@ public class Main extends Application {
         }
     }
 
-
+    /**
+     *
+     * @param args
+     */
     public static void main(String[] args) { launch(args);
     }
 }

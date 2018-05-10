@@ -1,32 +1,55 @@
 package sample.models;
 
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
+/**
+ *
+ */
 public class Point {
+    /**
+     *
+     */
     private double x, y;
 
+    /**
+     *
+     */
     public Point(){
         x = 0;
         y = 0;
     }
 
+    /**
+     *
+     * @param x
+     * @param y
+     */
     public Point(double x, double y)
     {
         this.x = x;
         this.y = y;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getX() {
         return x;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public double getY() {
         return y;
     }
 
+    /**
+     *
+     * @param obj
+     * @return
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -37,6 +60,10 @@ public class Point {
             return false;}
     }
 
+    /**
+     *
+     * @return
+     */
     public Point getNearest()
     {
         for (Point p : PointsSet.getPoints())

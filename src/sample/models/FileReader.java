@@ -7,38 +7,81 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO : выгразука из файла - демки
+/**
+ *
+ */
 public class FileReader {
+    /**
+     *
+     * @return
+     */
     public List<Polygon> getPolygons() {
         return mPolygons;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Point> getPoints() {
         return mPoints;
     }
 
+    /**
+     *
+     * @return
+     */
     public Point getStartPoint() {
         return startPoint;
     }
 
+    /**
+     *
+     * @return
+     */
     public Point getEndPoint() {
         return endPoint;
     }
 
+    /**
+     *
+     */
     private List<Polygon> mPolygons;
+    /**
+     *
+     */
     private List<Point> mPoints;
+    /**
+     *
+     */
     private Point startPoint;
+    /**
+     *
+     */
     private Point endPoint;
+    /**
+     *
+     */
     private File mfile;
 
+    /**
+     *
+     * @return
+     */
     public List<Line> getLines() {
         return mLines;
     }
 
+    /**
+     *
+     */
     private List<Line> mLines;
 
 
-
+    /**
+     *
+     * @param file
+     */
     public FileReader(File file)
     {
         mfile = file;
@@ -48,7 +91,10 @@ public class FileReader {
     }
 
 
-
+    /**
+     *
+     * @return
+     */
     public boolean getData()
     {
         try (FileInputStream fl = new FileInputStream(mfile))

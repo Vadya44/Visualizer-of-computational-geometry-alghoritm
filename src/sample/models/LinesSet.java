@@ -6,23 +6,45 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ *
+ */
 public class LinesSet implements Iterable {
+    /**
+     *
+     */
     GraphicsContext gc;
+
+    /**
+     *
+     * @return
+     */
     public HashSet<Line> getLines() {
         return lines;
     }
 
+    /**
+     *
+     */
     public void clear()
     {
         this.lines = new HashSet<>();
     }
 
+    /**
+     *
+     * @param gc
+     */
     public LinesSet(GraphicsContext gc)
     {
         lines = new HashSet<>();
         this.gc = gc;
     }
 
+    /**
+     *
+     * @param line
+     */
     public void addLine(Line line) {
         this.lines.add(line);
         gc.beginPath();
@@ -31,9 +53,15 @@ public class LinesSet implements Iterable {
         gc.stroke();
     }
 
-
+    /**
+     *
+     */
     private HashSet<Line> lines;
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator iterator() {
         return lines.iterator();

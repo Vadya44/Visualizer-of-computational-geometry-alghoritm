@@ -2,22 +2,47 @@ package sample.models;
 
 import java.util.*;
 
+/**
+ *
+ */
 public class Dijkstra {
 
-    private final List<Point> nodes;
+    /**
+     *
+     */
     private final List<Line> Lines;
+    /**
+     *
+     */
     private Set<Point> settledNodes;
+    /**
+     *
+     */
     private Set<Point> unSettledNodes;
+    /**
+     *
+     */
     private Map<Point, Point> predecessors;
+    /**
+     *
+     */
     private Map<Point, Integer> distance;
 
+    /**
+     *
+     * @param graph
+     */
     public Dijkstra(Graph graph) {
 
-        this.nodes = new ArrayList<Point>(PointsSet.getPoints());
         this.Lines = new ArrayList<Line>(graph.getEdges());
         this.Lines.addAll(getSecondPath(graph.getEdges()));
     }
 
+    /**
+     *
+     * @param lines
+     * @return
+     */
     public static ArrayList<Line> getSecondPath(ArrayList<Line> lines)
     {
         ArrayList<Line> res = new ArrayList<>();
@@ -26,6 +51,10 @@ public class Dijkstra {
         return res;
     }
 
+    /**
+     *
+     * @param source
+     */
     public void execute(Point source) {
         settledNodes = new HashSet<Point>();
         unSettledNodes = new HashSet<Point>();
@@ -41,6 +70,10 @@ public class Dijkstra {
         }
     }
 
+    /**
+     *
+     * @param node
+     */
     private void findMinimalDistances(Point node) {
         List<Point> adjacentNodes = getNeighbors(node);
         for (Point target : adjacentNodes) {
@@ -57,6 +90,12 @@ public class Dijkstra {
 
     }
 
+    /**
+     *
+     * @param node
+     * @param target
+     * @return
+     */
     private int getDistance(Point node, Point target) {
         for (Line line : Lines) {
             if (line.getP1().equals(node) &&
@@ -67,6 +106,11 @@ public class Dijkstra {
         return 0;
     }
 
+    /**
+     *
+     * @param node
+     * @return
+     */
     private List<Point> getNeighbors(Point node) {
         List<Point> neighbors = new ArrayList<Point>();
         for (Line line : Lines) {
@@ -78,6 +122,11 @@ public class Dijkstra {
         return neighbors;
     }
 
+    /**
+     *
+     * @param Pointes
+     * @return
+     */
     private Point getMinimum(Set<Point> Pointes) {
         Point minimum = null;
         for (Point Point : Pointes) {
@@ -92,10 +141,20 @@ public class Dijkstra {
         return minimum;
     }
 
+    /**
+     *
+     * @param Point
+     * @return
+     */
     private boolean isSettled(Point Point) {
         return settledNodes.contains(Point);
     }
 
+    /**
+     *
+     * @param destination
+     * @return
+     */
     private int getShortestDistance(Point destination) {
         Integer d = distance.get(destination);
         if (d == null) {
@@ -105,6 +164,11 @@ public class Dijkstra {
         }
     }
 
+    /**
+     *
+     * @param target
+     * @return
+     */
     public LinkedList<Point> getPath(Point target) {
         LinkedList<Point> path = new LinkedList<Point>();
         Point step = target;

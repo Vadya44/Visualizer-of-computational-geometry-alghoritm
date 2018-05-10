@@ -6,19 +6,35 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ *
+ */
 public class Polygon implements Iterable {
+    /**
+     *
+     */
     private List<Line> perimeter;
+    /**
+     *
+     */
     private List<Point> points;
 
-    public Polygon(List<Line> perimeter){
-        this.perimeter = perimeter;
-    }
 
+    /**
+     *
+     * @param line
+     */
     public void addLine(Line line) {
         perimeter.add(line);
         points.add(line.getP1());
     }
 
+    /**
+     *
+     * @param p1
+     * @param p2
+     * @return
+     */
     public boolean isBad(Point p1, Point p2)
     {
         boolean isContains1 = false;
@@ -38,14 +54,23 @@ public class Polygon implements Iterable {
                     bad = false;
             return bad;
         }
-        return false;
+        Point middle = new Point(((p1.getX() + p2.getX()) / 2), (p1.getY() + p2.getY()) / 2);
+        return (contains(middle));
     }
 
+    /**
+     *
+     */
     public Polygon() {
         perimeter = new ArrayList<>();
         points = new ArrayList<>();
-    };
+    }
 
+    /**
+     *
+     * @param test
+     * @return
+     */
     public boolean contains(Point test) {
         int i;
         int j;
@@ -61,6 +86,10 @@ public class Polygon implements Iterable {
         return result;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Iterator<Line> iterator() {
         if (perimeter.isEmpty())
@@ -68,6 +97,10 @@ public class Polygon implements Iterable {
         return perimeter.iterator();
     }
 
+    /**
+     *
+     * @param action
+     */
     @Override
     public void forEach(Consumer action) {
         if (perimeter.isEmpty())
@@ -76,6 +109,10 @@ public class Polygon implements Iterable {
             action.accept(l);
     }
 
+    /**
+     *
+     * @return
+     */
     public double[] getX()
     {
         double[] res = new double[points.size()];
@@ -84,6 +121,11 @@ public class Polygon implements Iterable {
             res[i++] = p.getX();
         return res;
     }
+
+    /**
+     *
+     * @return
+     */
     public double[] getY()
     {
         double[] res = new double[points.size()];
@@ -93,6 +135,10 @@ public class Polygon implements Iterable {
         return res;
     }
 
+    /**
+     *
+     * @return
+     */
     public int pointsSize()
     {
         return points.size();

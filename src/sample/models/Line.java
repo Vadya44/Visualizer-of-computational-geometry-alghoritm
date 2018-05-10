@@ -1,32 +1,54 @@
 package sample.models;
 
+/**
+ *
+ */
 public class Line {
+    /**
+     *
+     */
     private Point p1, p2;
 
-    public Line(){
-        p1 = new Point();
-        p2 = new Point();
-    }
-
+    /**
+     *
+     * @param p1
+     * @param p2
+     */
     public Line(Point p1, Point p2) {
         this.p1 = p1;
         this.p2 = p2;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getWeight()
     {
         return Math.sqrt(Math.pow(p2.getX() - p1.getX(), 2) + Math.pow(p2.getY() - p1.getY(), 2));
     }
+
+    /**
+     *
+     * @return
+     */
     public Point getP1() {
         return p1;
     }
 
-
+    /**
+     *
+     * @return
+     */
     public Point getP2() {
         return p2;
     }
 
-
+    /**
+     *
+     * @param p
+     * @return
+     */
     public boolean contains(Point p)
     {
         double k = (p2.getY() - p1.getY()) / (p2.getX() - p1.getX());
@@ -35,6 +57,12 @@ public class Line {
             return true;
         else return false;
     }
+
+    /**
+     *
+     * @param vw
+     * @return
+     */
     public boolean isLeftTo(Line vw)
     {
         if (!(vw.p1.equals(this.getP1()) || vw.p1.equals(this.getP2())  ||
@@ -48,6 +76,11 @@ public class Line {
         return false;
     }
 
+    /**
+     *
+     * @param vw
+     * @return
+     */
     public boolean isRightTo(Line vw)
     {
         if (!(vw.p1.equals(this.getP1()) || vw.p1.equals(this.getP2())  ||

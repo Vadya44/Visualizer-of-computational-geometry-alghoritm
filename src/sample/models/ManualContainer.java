@@ -1,12 +1,22 @@
 package sample.models;
 // TODO: manual text container
 
-import java.util.HashSet;
-
+/**
+ *
+ */
 public class ManualContainer {
+    /**
+     *
+     */
     private static final ManualContainer instance = new ManualContainer();
+    /**
+     *
+     */
     private StringBuffer text;
 
+    /**
+     *
+     */
     private ManualContainer() {
         text = new StringBuffer();
         text.append("Справка по использованию: \n\n" +
@@ -23,6 +33,11 @@ public class ManualContainer {
                 "S:x;y - начальная и E:x;y - конечная.\n" +
                 " 3. Каждая строка обязана начинаться с одного из трех символов 'P', 'S', и 'E', а так же удовлетворять условиям 1 и 2.");
     }
+
+    /**
+     *
+     * @return
+     */
     public static String getText()
     {
         return instance.text.toString();
