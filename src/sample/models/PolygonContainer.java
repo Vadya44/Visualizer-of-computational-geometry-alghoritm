@@ -3,24 +3,23 @@ package sample.models;
 import java.util.ArrayList;
 
 /**
- *
+ * Синглтон - контейнер полигонов
  */
 public class PolygonContainer {
     /**
-     *
+     * Хранилище полигонов
      */
     private ArrayList<Polygon> mPolygons;
 
     /**
-     *
+     * Инстанс класса
      */
     private static final PolygonContainer instance = new PolygonContainer();
 
     /**
-     *
-     * @param p1
-     * @param p2
-     * @return
+     * Функция, проверяющая, лежит ли отрезок внутри какого-либо полигона
+     * @param p1 Первая точка
+     * @param p2 Вторая точка
      */
     public static boolean isOkay(Point p1, Point p2)
     {
@@ -31,7 +30,7 @@ public class PolygonContainer {
     }
 
     /**
-     *
+     * Конструктор по умолчанию
      */
     private PolygonContainer()
     {
@@ -39,7 +38,7 @@ public class PolygonContainer {
     }
 
     /**
-     *
+     * Функция, очищающая контейнер
      */
     public static void clear()
     {
@@ -48,9 +47,8 @@ public class PolygonContainer {
     }
 
     /**
-     *
-     * @param p
-     * @return
+     * Функция, проверяющая, является ли точка вершиной какого-либо полигона
+     * @param p Проверяемая точка
      */
     public static boolean contains(Point p)
     {
@@ -60,8 +58,8 @@ public class PolygonContainer {
     }
 
     /**
-     *
-     * @param p
+     * Функция, добавляющая полигон в контейнер
+     * @param p Добавляемый полигон
      */
     public static void addPolygon(Polygon p)
     {
