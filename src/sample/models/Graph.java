@@ -3,43 +3,46 @@ package sample.models;
 import java.util.*;
 
 /**
- *
+ * Класс графа
  */
 public class Graph {
     /**
-     *
+     * Отсортированное по углу хранилище точек
      */
     public static TreeSet<Point> sortedPoints;
     /**
-     *
+     * Хранилище отрезков
      */
     private static Set<Line> mLines;
 
     /**
-     *
-     * @return
+     * Функция, возвращающая все ребра
      */
     public ArrayList<Line> getEdges() {
         return mEdges;
     }
 
     /**
-     *
+     * Функция, возвращающая все точки
      * @return
      */
     public ArrayList<Point> getVertexes() {
         return mVertexes;
     }
 
-
+    /**
+     * Хранилище ребер
+     */
     ArrayList<Line> mEdges;
+    /**
+     * Хранилище вершин
+     */
     ArrayList<Point> mVertexes;
 
     /**
-     *
-     * @param line
-     * @param left
-     * @return
+     * Функция, проверяющая пересекаются ли отрезки
+     * @param line Первый отрезок
+     * @param left Второй отрезок
      */
     private static boolean areIntersectsLines(Line line, Line left) {
         boolean isOk = true;
@@ -50,10 +53,9 @@ public class Graph {
     }
 
     /**
-     *
-     * @param l1
-     * @param l2
-     * @return
+     * Вспомогательная функция проверки на пересечение
+     * @param l1 Первый отрезок
+     * @param l2 Второй отрезок
      */
     public static boolean areIntersects(Line l1, Line l2)
     {
@@ -90,9 +92,9 @@ public class Graph {
     }
 
     /**
-     *
-     * @param p
-     * @param p2
+     * Функция, добавляющая ребро в граф
+     * @param p Первая точка ребра
+     * @param p2 Вторая точка ребра
      */
     private void addEdge(Point p, Point p2)
     {
@@ -102,8 +104,8 @@ public class Graph {
     }
 
     /**
-     *
-     * @param points
+     * Конструктор инициализирующий хранилище вершин
+     * @param points Набор вершин
      */
     public Graph(Set<Point> points)
     {
@@ -112,9 +114,8 @@ public class Graph {
 
 
     /**
-     *
-     * @param lines
-     * @return
+     * Функция, строящая граф видимости
+     * @param lines Исходный набор отрезков
      */
     public static Graph buildVisibilityGraph(HashSet<Line> lines)
     {
@@ -132,10 +133,9 @@ public class Graph {
 
 
     /**
-     *
-     * @param p1
-     * @param p2
-     * @return
+     * Функция, возвращающая угол между прямой p1p2 и осью oY
+     * @param p1 Первая точка
+     * @param p2 Вторая точка
      */
     public static int getAngle(Point p1, Point p2)
     {
@@ -150,10 +150,9 @@ public class Graph {
     }
 
     /**
-     *
-     * @param v
-     * @param lines
-     * @return
+     * Функция, возвращающая набор видимых из точка v вершин
+     * @param v Точка из которой ищутся видимые вершины
+     * @param lines Проверяемые отрезки
      */
     private static HashSet<Point> getVisibleVerticies(Point v, Set<Line> lines)
     {
