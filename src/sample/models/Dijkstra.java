@@ -3,34 +3,34 @@ package sample.models;
 import java.util.*;
 
 /**
- *
+ * Поиск кратчайшего расстояние из точки А в точку Б на графе
  */
 public class Dijkstra {
 
     /**
-     *
+     * Массив ребер
      */
     private final List<Line> Lines;
     /**
-     *
+     * Набор уже решенных точек
      */
     private Set<Point> settledNodes;
     /**
-     *
+     * Набор еще не решенных точек
      */
     private Set<Point> unSettledNodes;
     /**
-     *
+     * Карта навигации по предшественникам
      */
     private Map<Point, Point> predecessors;
     /**
-     *
+     * Набор точка-расстояние
      */
     private Map<Point, Integer> distance;
 
     /**
-     *
-     * @param graph
+     * Конструктор по графу
+     * @param graph Граф подлежащий решению
      */
     public Dijkstra(Graph graph) {
 
@@ -39,9 +39,8 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param lines
-     * @return
+     * Функция, дублирующая ребра, разворачивая, чтобы они стали двунаправленными
+     * @param lines дублируемые ребра
      */
     public static ArrayList<Line> getSecondPath(ArrayList<Line> lines)
     {
@@ -52,8 +51,8 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param source
+     * Инициализация на основе точки
+     * @param source Начальная точка
      */
     public void execute(Point source) {
         settledNodes = new HashSet<Point>();
@@ -71,8 +70,8 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param node
+     * Запуск поиска кратчайшего расстояния для текущей точки
+     * @param node Точка относительно которой ищется кратчайшее расстояние
      */
     private void findMinimalDistances(Point node) {
         List<Point> adjacentNodes = getNeighbors(node);
@@ -91,10 +90,9 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param node
-     * @param target
-     * @return
+     * Получение дистанции из node в target
+     * @param node Начальная точка
+     * @param target Конечная точка
      */
     private int getDistance(Point node, Point target) {
         for (Line line : Lines) {
@@ -107,9 +105,8 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param node
-     * @return
+     * Получение массива соседей точки
+     * @param node Точка, соседи которой будут искаться
      */
     private List<Point> getNeighbors(Point node) {
         List<Point> neighbors = new ArrayList<Point>();
@@ -123,9 +120,8 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param Pointes
-     * @return
+     * Функция находящая минимум в передаваемом массиве точек
+     * @param Pointes Набор точек в которых будет искаться минимальная
      */
     private Point getMinimum(Set<Point> Pointes) {
         Point minimum = null;
@@ -142,18 +138,16 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param Point
-     * @return
+     * Проверка на решенность точки
+     * @param Point Проверяемая точка
      */
     private boolean isSettled(Point Point) {
         return settledNodes.contains(Point);
     }
 
     /**
-     *
-     * @param destination
-     * @return
+     * Возвращает кратчайшее расстояние до точки
+     * @param destination Конечная точка
      */
     private int getShortestDistance(Point destination) {
         Integer d = distance.get(destination);
@@ -165,9 +159,8 @@ public class Dijkstra {
     }
 
     /**
-     *
-     * @param target
-     * @return
+     * Взятие кратчайшего пути до точки(связный список)
+     * @param target Конечная точка
      */
     public LinkedList<Point> getPath(Point target) {
         LinkedList<Point> path = new LinkedList<Point>();
