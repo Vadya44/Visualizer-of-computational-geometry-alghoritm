@@ -25,7 +25,12 @@ public class PointsSet {
 
     public static void addPoint(Point p)
     {
-        instance.mPoints.add(p);
+//        boolean cont = false;
+//        for (Point pp : instance.mPoints)
+//            if (p.equals(pp))
+//                cont = true;
+//        if (!cont)
+            instance.mPoints.add(p);
     }
 
     public static PointsSet getInstance()

@@ -6,16 +6,19 @@ import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.models.*;
 
+import java.io.File;
 import java.util.*;
 
 public class Main extends Application {
@@ -29,6 +32,7 @@ public class Main extends Application {
     boolean pointToChoosing = false;
     Point fromPoint = null;
     Point toPoint = null;
+
 
     Point oldPoint = new Point(0, 0);
     private boolean isEndOfLine = false;
@@ -47,6 +51,7 @@ public class Main extends Application {
         Button buttonCompute = new Button("Вычислить путь");
         Button buttonClear = new Button("Очистить");
         Button buttonHelp = new Button("Как пользоваться");
+        Button buttonChooseFile = new Button("Выбрать файл");
 
 
         buttonStart.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -150,7 +155,7 @@ public class Main extends Application {
         buttonClear.setOnMouseEntered(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                buttonCompute.setEffect(new DropShadow());
+                buttonClear.setEffect(new DropShadow());
             }
         });
         buttonClear.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -162,6 +167,8 @@ public class Main extends Application {
                 isEndOfLine = false;
                 buttonEnd.setDisable(false);
                 buttonStart.setDisable(false);
+                buttonChooseFile.setDisable(false);
+                buttonCompute.setDisable(false);
             }
         });
         buttonClear.setOnMouseExited(new EventHandler<MouseEvent>() {
@@ -187,7 +194,9 @@ public class Main extends Application {
         buttonHelp.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Text secondLabel = new Text("I'm a Label on new Window");
+                TextArea secondLabel = new TextArea(ManualContainer.getText());
+                secondLabel.setWrapText(true);
+                secondLabel.setEditable(false);
 
                 StackPane secondaryLayout = new StackPane();
                 secondaryLayout.getChildren().add(secondLabel);
@@ -213,10 +222,36 @@ public class Main extends Application {
             }
         });
 
+        buttonChooseFile.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonChooseFile.setEffect(new DropShadow());
+            }
+        });
+        buttonChooseFile.setOnMouseExited(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                buttonChooseFile.setEffect(null);
+            }
+        });
+        final FileChooser fileChooser = new FileChooser();
+        buttonChooseFile.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                File file = fileChooser.showOpenDialog(primaryStage);
+                buttonCompute.setDisable(true);
+                buttonChooseFile.setDisable(true);
+                buttonEnd.setDisable(true);
+                buttonStart.setDisable(true);
+                calcFromFile(file, primaryStage);
+            }
+        });
+
         root.getChildren().add(buttonStart);
         root.getChildren().add(buttonEnd);
         root.getChildren().add(buttonCompute);
         root.getChildren().add(buttonClear);
+        root.getChildren().add(buttonChooseFile);
         root.getChildren().add(buttonHelp);
 
         primaryStage.setTitle("I see edges!");
@@ -345,6 +380,75 @@ public class Main extends Application {
         gc.fillPolygon(p.getX(), p.getY(), p.pointsSize());
     }
 
+    public void calcFromFile(File file, Stage primaryStage)
+    {
+        FileReader fr = new FileReader(file);
+        if (fr.getData())
+        {
+            int i;
+            for (Line l : fr.getLines())
+            {
+                LinesContainer.addLine(l);
+                linesSet.addLine(l);
+            }
+            for (Point p : fr.getPoints())
+            {
+                PointsSet.addPoint(p);
+            }
+            fromPoint = fr.getStartPoint();
+            toPoint = fr.getEndPoint();
+            for (Polygon p : fr.getPolygons()) {
+                PolygonContainer.addPolygon(p);
+                drawPoly(p);
+            }
+
+            gc.setFill(Color.GREEN);
+            gc.fillOval(fromPoint.getX() - 5, fromPoint.getY() - 5, 10, 10);
+
+
+            gc.setFill(Color.RED);
+            gc.fillOval(toPoint.getX() - 5, toPoint.getY() - 5, 10, 10);
+
+            Graph graph = new Graph(PointsSet.getPoints());
+            graph = Graph.buildVisibilityGraph(LinesContainer.getLines());
+            gc.setStroke(Color.RED);
+            gc.setLineWidth(1);
+            for (Line l : graph.getEdges())
+                linesSet.addLine(l);
+            Dijkstra dijkstra = new Dijkstra(graph);
+            dijkstra.execute(fromPoint);
+            LinkedList<Point> ll = dijkstra.getPath(toPoint);
+
+            gc.setStroke(Color.GREEN);
+            gc.setLineWidth(6);
+
+            for (i = 0; i < ll.size() - 1 ; i++)
+                linesSet.addLine(new Line(ll.get(i), ll.get(i + 1)));
+            gc.setLineWidth(3);
+            gc.setStroke(Color.BLUE);
+
+        }
+        else {
+
+                Text secondLabel = new Text("Неверный формат или содержимое файла.");
+                secondLabel.setStrokeWidth(8);
+
+                StackPane secondaryLayout = new StackPane();
+                secondaryLayout.getChildren().add(secondLabel);
+
+                Scene secondScene = new Scene(secondaryLayout, 400, 200);
+
+                Stage newWindow = new Stage();
+                newWindow.setTitle("Ошибка");
+                newWindow.setScene(secondScene);
+
+                newWindow.initModality(Modality.WINDOW_MODAL);
+
+                newWindow.initOwner(primaryStage);
+
+                newWindow.show();
+        }
+    }
 
 
     public static void main(String[] args) { launch(args);
