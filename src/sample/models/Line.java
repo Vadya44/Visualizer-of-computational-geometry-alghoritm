@@ -1,18 +1,18 @@
 package sample.models;
 
 /**
- *
+ * Класс отрезков
  */
 public class Line {
     /**
-     *
+     * Точки отрезка
      */
     private Point p1, p2;
 
     /**
-     *
-     * @param p1
-     * @param p2
+     * Конструктор
+     * @param p1 Первая точка
+     * @param p2 Вторая точка
      */
     public Line(Point p1, Point p2) {
         this.p1 = p1;
@@ -20,8 +20,7 @@ public class Line {
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая длину отрезка
      */
     public double getWeight()
     {
@@ -29,39 +28,23 @@ public class Line {
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая первую точку
      */
     public Point getP1() {
         return p1;
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая вторую точку
      */
     public Point getP2() {
         return p2;
     }
 
-    /**
-     *
-     * @param p
-     * @return
-     */
-    public boolean contains(Point p)
-    {
-        double k = (p2.getY() - p1.getY()) / (p2.getX() - p1.getX());
-        double b = (p2.getX()*p1.getY() - p1.getX()*p2.getY())/(p2.getX() - p1.getX()); // y = kx+b
-        if (p.getY() == k * p.getX() + b)
-            return true;
-        else return false;
-    }
 
     /**
-     *
-     * @param vw
-     * @return
+     * Функция, проверяющая лежит ли точка слева относительно луча vw
+     * @param vw Луч
      */
     public boolean isLeftTo(Line vw)
     {
@@ -77,9 +60,8 @@ public class Line {
     }
 
     /**
-     *
-     * @param vw
-     * @return
+     * Функция, проверяющая лежит ли точка справа относительно луча vw
+     * @param vw Луч
      */
     public boolean isRightTo(Line vw)
     {
