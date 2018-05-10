@@ -8,79 +8,74 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * Класс чтения точек и полигонов из файла
  */
 public class FileReader {
     /**
-     *
-     * @return
+     * Функция, возвращающая полигоны
      */
     public List<Polygon> getPolygons() {
         return mPolygons;
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая точки
      */
     public List<Point> getPoints() {
         return mPoints;
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая начальную точку
      */
     public Point getStartPoint() {
         return startPoint;
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая конечную точку
      */
     public Point getEndPoint() {
         return endPoint;
     }
 
     /**
-     *
+     * Хранилище полигонов
      */
     private List<Polygon> mPolygons;
     /**
-     *
+     * Хранилище точек
      */
     private List<Point> mPoints;
     /**
-     *
+     * Начальная точка
      */
     private Point startPoint;
     /**
-     *
+     * Конечная точка
      */
     private Point endPoint;
     /**
-     *
+     * Читаемый файл
      */
     private File mfile;
 
     /**
-     *
-     * @return
+     * Функция, возвращающая все ребра
      */
     public List<Line> getLines() {
         return mLines;
     }
 
     /**
-     *
+     * Хранилище ребер
      */
     private List<Line> mLines;
 
 
     /**
-     *
-     * @param file
+     * Конструктор, инициализирующий поля
+     * @param file Читаемый файл
      */
     public FileReader(File file)
     {
@@ -92,8 +87,7 @@ public class FileReader {
 
 
     /**
-     *
-     * @return
+     * Функция, читающая содержимое файла
      */
     public boolean getData()
     {
