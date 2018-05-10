@@ -1,21 +1,20 @@
 package sample.models;
-// TODO: manual text container
 
 /**
- *
+ * Синглтон - хранитель спрвки
  */
 public class ManualContainer {
     /**
-     *
+     * Инстанс класса
      */
     private static final ManualContainer instance = new ManualContainer();
     /**
-     *
+     * Содержимое справки
      */
     private StringBuffer text;
 
     /**
-     *
+     * Функция, инициализирующая справку
      */
     private ManualContainer() {
         text = new StringBuffer();
@@ -35,8 +34,7 @@ public class ManualContainer {
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая текст справки
      */
     public static String getText()
     {
