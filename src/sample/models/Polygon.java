@@ -4,25 +4,24 @@ package sample.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.function.Consumer;
 
 /**
- *
+ * Класс полигона
  */
 public class Polygon implements Iterable {
     /**
-     *
+     * Хранилище ребер полигона
      */
     private List<Line> perimeter;
     /**
-     *
+     * Хранилище вершин полигона
      */
     private List<Point> points;
 
 
     /**
-     *
-     * @param line
+     * Функция, добавляющая ребро
+     * @param line Добавляемое ребро
      */
     public void addLine(Line line) {
         perimeter.add(line);
@@ -30,10 +29,9 @@ public class Polygon implements Iterable {
     }
 
     /**
-     *
-     * @param p1
-     * @param p2
-     * @return
+     * Функция, проверяющая, лежит ли отрезок внутри полигона
+     * @param p1 Первая точка
+     * @param p2 Вторая точка
      */
     public boolean isBad(Point p1, Point p2)
     {
@@ -59,7 +57,7 @@ public class Polygon implements Iterable {
     }
 
     /**
-     *
+     * Конструктор по умолчанию
      */
     public Polygon() {
         perimeter = new ArrayList<>();
@@ -67,9 +65,8 @@ public class Polygon implements Iterable {
     }
 
     /**
-     *
-     * @param test
-     * @return
+     * Функция, проверяющая, лежит ли точка внутри полигона
+     * @param test Проверяемая точка
      */
     public boolean contains(Point test) {
         int i;
@@ -87,8 +84,7 @@ public class Polygon implements Iterable {
     }
 
     /**
-     *
-     * @return
+     * Итератор по ребрам
      */
     @Override
     public Iterator<Line> iterator() {
@@ -97,21 +93,9 @@ public class Polygon implements Iterable {
         return perimeter.iterator();
     }
 
-    /**
-     *
-     * @param action
-     */
-    @Override
-    public void forEach(Consumer action) {
-        if (perimeter.isEmpty())
-            throw new NullPointerException("Empty perimeter");
-        for (Line l : perimeter)
-            action.accept(l);
-    }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая значения всех точек по Ox
      */
     public double[] getX()
     {
@@ -123,8 +107,7 @@ public class Polygon implements Iterable {
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая значения всех точек по Oy
      */
     public double[] getY()
     {
@@ -136,8 +119,7 @@ public class Polygon implements Iterable {
     }
 
     /**
-     *
-     * @return
+     * Функция, возвращающая количество вершин полигона
      */
     public int pointsSize()
     {
