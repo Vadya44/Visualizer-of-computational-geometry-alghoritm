@@ -7,24 +7,18 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- *
+ * Класс рисуемого хранилища отрезков
  */
 public class LinesSet implements Iterable {
     /**
-     *
+     * Графический контекст, на котором рисуются отрезки
      */
     GraphicsContext gc;
 
-    /**
-     *
-     * @return
-     */
-    public HashSet<Line> getLines() {
-        return lines;
-    }
+
 
     /**
-     *
+     * Очистка хранилища
      */
     public void clear()
     {
@@ -32,8 +26,8 @@ public class LinesSet implements Iterable {
     }
 
     /**
-     *
-     * @param gc
+     * Конструктор по ГК
+     * @param gc Графический контекст
      */
     public LinesSet(GraphicsContext gc)
     {
@@ -42,8 +36,8 @@ public class LinesSet implements Iterable {
     }
 
     /**
-     *
-     * @param line
+     * Функция, добавляющая отрезок в хранилище
+     * @param line Добавляемый отрезок
      */
     public void addLine(Line line) {
         this.lines.add(line);
@@ -54,13 +48,12 @@ public class LinesSet implements Iterable {
     }
 
     /**
-     *
+     * Хранилище отрезков
      */
     private HashSet<Line> lines;
 
     /**
-     *
-     * @return
+     * Итератор по хранилищу
      */
     @Override
     public Iterator iterator() {
