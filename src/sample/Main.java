@@ -22,7 +22,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- *
+ * Основной класс приложения
  */
 public class Main extends Application {
     private Canvas canvas = new Canvas(1800, 1800);
@@ -48,9 +48,9 @@ public class Main extends Application {
     private Point lastPoint = new Point();
 
     /**
-     *
-     * @param primaryStage
-     * @throws Exception
+     * Функция, запускающая сцену
+     * @param primaryStage Основная сцена
+     * @throws Exception Возможная исключительная ситуация
      */
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -362,7 +362,7 @@ public class Main extends Application {
     }
 
     /**
-     *
+     * Функция, очищающая содержимое рабочего пространства
      */
     public void clearAll()
     {
@@ -391,8 +391,8 @@ public class Main extends Application {
     }
 
     /**
-     *
-     * @param p
+     * Функция, рисующая полигон
+     * @param p Рисуемый полигон
      */
     public void drawPoly(Polygon p)
     {
@@ -401,9 +401,9 @@ public class Main extends Application {
     }
 
     /**
-     *
-     * @param file
-     * @param primaryStage
+     * Функция, считающая из файла
+     * @param file Читаемый файл
+     * @param primaryStage Основная сцена
      */
 
     public void calcFromFile(File file, Stage primaryStage)
@@ -477,8 +477,8 @@ public class Main extends Application {
     }
 
     /**
-     *
-     * @param args
+     * Функция, инициализирующая приложение
+     * @param args Аргументы командной строки
      */
     public static void main(String[] args) { launch(args);
     }
