@@ -1,6 +1,7 @@
 package sample.models;
 
 
+import java.awt.geom.Path2D;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -50,7 +51,7 @@ public class Polygon implements Iterable {
                 if (l.getP1().equals(p1) && l.getP2().equals(p2)
                         || l.getP1().equals(p2) && l.getP2().equals(p1))
                     bad = false;
-            return bad;
+            if (!bad) return bad;
         }
         Point middle = new Point(((p1.getX() + p2.getX()) / 2), (p1.getY() + p2.getY()) / 2);
         return (contains(middle));
@@ -82,6 +83,7 @@ public class Polygon implements Iterable {
         }
         return result;
     }
+
 
     /**
      * Итератор по ребрам

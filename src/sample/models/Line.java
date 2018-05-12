@@ -75,4 +75,13 @@ public class Line {
                 return true;
         return false;
     }
+    public boolean contains(Point p)
+    {
+        double dx1 = p2.getX() - p1.getX();
+        double dy1 = p2.getY() - p1.getY();
+        double dx = p.getX() - p1.getX();
+        double dy = p.getY() - p1.getY();
+        double S = dx1 * dy - dx * dy1;
+        return S == 0;
+    }
 }
