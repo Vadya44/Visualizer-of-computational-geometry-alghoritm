@@ -1,1 +1,1 @@
-# course
+### Visualizer of computational geometry alghoritm
